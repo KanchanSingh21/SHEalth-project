@@ -26,7 +26,7 @@ def signup_info(request):
         else:
             user=signup_details.objects.create(email=email,DOB=dob,address=address,desination=desination,password=password,confirm_password=confirm_password)
             # return HttpResponse("you have successfully inserted your details in database")
-            return ('login')
+            return redirect('login')
     return render(request,'signup.html')
     
 def login(request):
@@ -36,9 +36,9 @@ def login(request):
     if request.method=="POST":
         email=request.POST['email']
         password=request.POST['password']
-        user=signup_details.objects.get(email=email,password=password)
+        user=signup_details.objects.get(email=email)
         if user.password==password:
-            return HttpResponse("you have been login in successfully")
+            return render(request,'index.html')
         else:
             return HttpResponse('Entered credential are not in record')
     return render(request,'login.html')    
